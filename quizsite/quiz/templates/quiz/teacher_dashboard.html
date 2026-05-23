@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Panel</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .high-score { color: green; font-weight: bold; }
+        .low-score { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Student Performance Tracker</h2>
+    <p>Total Registered Students: {{ student_count }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Score</th>
+                <th>Percentage</th>
+                <th>Date Attempted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in results %}
+            <tr>
+                <td>{{ record.user.username }}</td>
+                <td>{{ record.user.email }}</td>
+                <td>{{ record.score }} / {{ record.total_questions }}</td>
+                <td class="{% if record.percentage >= 70 %}high-score{% else %}low-score{% endif %}">
+                    {{ record.percentage }}%
+                </td>
+                <td>{{ record.date_completed|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{% url 'dashboard' %}">Back to My Dashboard</a>
+</body>
+</html>

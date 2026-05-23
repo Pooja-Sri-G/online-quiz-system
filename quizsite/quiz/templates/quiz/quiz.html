@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Quiz</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Online Quiz</h2>
+
+    <form method="POST" action="{% url 'submit_quiz' %}">
+        {% csrf_token %}
+
+        {% for q in questions %}
+            <h3>{{ forloop.counter }}. {{ q.question_text }}</h3>
+
+            <input type="radio" name="q{{ q.id }}" value="{{ q.option1 }}" required>
+            {{ q.option1 }} <br>
+
+            <input type="radio" name="q{{ q.id }}" value="{{ q.option2 }}">
+            {{ q.option2 }} <br>
+
+            <input type="radio" name="q{{ q.id }}" value="{{ q.option3 }}">
+            {{ q.option3 }} <br>
+
+            <input type="radio" name="q{{ q.id }}" value="{{ q.option4 }}">
+            {{ q.option4 }} <br><br>
+        {% endfor %}
+
+        <button class="btn" type="submit">Submit Quiz</button>
+    </form>
+</div>
+
+</body>
+</html>
