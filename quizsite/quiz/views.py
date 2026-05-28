@@ -48,11 +48,6 @@ def logout_view(request):
 def dashboard_view(request):
     return render(request, 'quiz/dashboard.html')
 
-# QUIZ PAGE (Show Questions)
-def quiz_view(request):
-    questions = Question.objects.all()
-    return render(request, 'quiz/quiz.html', {"questions": questions})
-
 # DISPLAY QUIZ
 def quiz_view(request):
     questions = Question.objects.all()
@@ -74,7 +69,7 @@ def submit_quiz_view(request):
         percentage = round((score / total) * 100, 2) if total > 0 else 0
 
         Result.objects.create(
-            user=request.user,      # request is defined here
+            user=request.user,      
             score=score,
             total=total,
             percentage=percentage
